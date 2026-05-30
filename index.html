@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure CSS Accordion</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #e13b3b;
+            --border: #1e1e1e;
+            --accent: #c8ff00;
+            --text: #f0f0f0;
+            --muted: #aaa;
+        }
+
+        body {
+            background: var(--bg);
+            color: #f0f0f0;
+            font-family: 'Syne', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .accordion {
+            width: 100%;
+            max-width: 640px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .accordion input[type="checkbox"] {
+            display: none;
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #1e1e1e;
+            transition: border-color 0.5s ease;
+        }
+
+        .accordion-item:has(input:checked) {
+            border-color: var(--accent);
+        }
+
+        .accordion-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            gap: 1rem;
+        }
+
+        .label-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .label-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            opacity: 0.8;
+            min-width: 24px;
+        }
+
+        .label-text {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.4s ease;
+        }
+
+        .icon::before,
+        .icon::after {
+            content: "";
+            position: absolute;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.4s ease;
+        }
+
+        .icon::before {
+            width: 10px;
+            height: 2px;
+        }
+
+        .icon::after {
+            width: 2px;
+            height: 10px;
+        }
+
+        input:checked~.accordion-label .icon {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: rotate(45deg);
+        }
+
+        input:checked~.accordion-label .icon::before,
+        input:checked~.accordion-label .icon::after {
+            background: #000;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        input:checked~.accordion-content {
+            max-height: 500px;
+        }
+
+        .accordion-body {
+            padding: 1rem 1.5rem 1.4rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .accordion-body p {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .accordion-body code {
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.3rem 0.7rem;
+            background: #000;
+            color: var(--accent);
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-family: 'Space Mono', monospace;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="accordion">
+
+        <div class="accordion-item">
+            <input type="checkbox" id="item1">
+            <label class="accordion-label" for="item1">
+                <div class="label-left">
+                    <span class="label-num">01</span>
+                    <span class="label-text">How does it work?</span>
+                </div>
+                <div class="icon"></div>
+            </label>
+
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Uses a hidden checkbox and label combination to create a fully functional accordion without
+                        JavaScript.</p>
+                    <code>input:checked ~ .accordion-content</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <input type="checkbox" id="item2">
+            <label class="accordion-label" for="item2">
+                <div class="label-left">
+                    <span class="label-num">02</span>
+                    <span class="label-text">The secret selector</span>
+                </div>
+                <div class="icon"></div>
+            </label>
+
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>The general sibling selector (~) targets content that appears after the checked checkbox.</p>
+                    <code>input:checked ~ .panel</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <input type="checkbox" id="item3">
+            <label class="accordion-label" for="item3">
+                <div class="label-left">
+                    <span class="label-num">03</span>
+                    <span class="label-text">Smooth animation trick</span>
+                </div>
+                <div class="icon"></div>
+            </label>
+
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>Since CSS cannot animate height:auto, we animate max-height to create a smooth expanding effect.
+                    </p>
+                    <code>transition: max-height 0.45s ease;</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <input type="checkbox" id="item4">
+            <label class="accordion-label" for="item4">
+                <div class="label-left">
+                    <span class="label-num">04</span>
+                    <span class="label-text">The :has() power move</span>
+                </div>
+                <div class="icon"></div>
+            </label>
+
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p>The :has() pseudo-class allows the parent accordion item to react when its checkbox is checked.
+                    </p>
+                    <code>.accordion-item:has(input:checked)</code>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
